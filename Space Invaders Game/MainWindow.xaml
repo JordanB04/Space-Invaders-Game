@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Space_Invaders_Game"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Space Invanders Game" Height="500" Width="800">
+    <Canvas Name="myCanvas" Focusable="True" Background="Black" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
+        <Label Name="enemiesLeft" Foreground="White" FontSize="16" FontWeight="ExtraBold">Enemies Remaining: 0</Label>
+
+        <Rectangle Name="Player" Fill="White" Height="65" Width="55" Canvas.Left="381" Canvas.Top="394" />
+
+
+    </Canvas>
 </Window>
