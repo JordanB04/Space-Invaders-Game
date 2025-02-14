@@ -37,7 +37,7 @@ namespace Space_Invaders_Game
         ImageBrush playerSkin = new ImageBrush(); 
 
 
-
+        //Main Window for Game to Start, includes the Game Timer to begin and shows player images
         public MainWindow()
         {
             InitializeComponent();
@@ -47,23 +47,69 @@ namespace Space_Invaders_Game
             gameTimer.Start();
 
             playerSkin.ImageSource = new BitmapImage(new Uri("pack://application:,,,/images/player.png"));
-            player
+            player.Fill = playerSkin;
+
+            myCanvas.Focus();
 
 
         }
-
+        //Up Down Left Right Movement of Player
         private void GameLoop(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-        }
+            if( goLeft == true && Canvas.GetLeft(player)>0)
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) - 10);
+            }
 
+            if(goRight == true && Canvas.GetLeft(player) + 80 < Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(player, Canvas.GetLeft(player) + 10);
+            }
+        }
+        //Key is Down
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
+            if(e.Key == Key.Left)
+            {
+                goLeft = true;
+            }
+            if (e.Key == Key.Right)
+            {
+                goRight = true;
+            }
 
         }
-
+        //Key is Up
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Left)
+            {
+                goLeft = false;
+            }
+            if (e.Key == Key.Right)
+            {
+                goRight = false;
+            }
+
+            if( e.Key == Key.Space)
+            {
+                Rectangle newBullet = new Rectangle
+                {
+                    Tag = "bullet",
+                    Height = 20,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Red
+                };
+
+                Canvas.SetTop(newBullet, Canvas.GetTop(player) - newBullet.Height);
+                Canvas.SetLeft(newBullet, Canvas.GetLeft(player) + player.Width / 2);
+
+                myCanvas.Children.Add(newBullet);
+
+
+
+            }
 
         }
 
