@@ -57,7 +57,10 @@ namespace Space_Invaders_Game
         // Game Loop for the Game to Start and Run Functions
         private void GameLoop(object sender, EventArgs e)
         {
-            if( goLeft == true && Canvas.GetLeft(player)>0)
+            Rect playerHitBox = new Rect(Canvas.GetLeft(player), Canvas.GetTop(player), player.Width, player.Height);
+
+
+            if ( goLeft == true && Canvas.GetLeft(player)>0)
             {
                 Canvas.SetLeft(player, Canvas.GetLeft(player) - 10);
             }
@@ -79,19 +82,66 @@ namespace Space_Invaders_Game
 
             foreach (var x in myCanvas.Children.OfType<Rectangle>())
             {
-                if(x is Rectangle && (string)x.Tag == "bullet")
+                if (x is Rectangle && (string)x.Tag == "bullet")
                 {
                     Canvas.SetTop(x, Canvas.GetTop(x) - 20);
+
+
+                    if (Canvas.GetTop(x) < 10)
+                    {
+                        itemsToRemove.Add(x);
+                    }
+
+                    Rect bullet = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
                 }
 
-                if(Canvas.GetTop(x) < 10)
+                if (x is Rectangle && (string)x.Tag == "enemy")
                 {
-                    itemsToRemove.Add(x);
+                    Canvas.SetLeft(x, Canvas.GetLeft(x) + enemySpeed);
+
+                    if (Canvas.GetLeft(x) > 820)
+                    {
+                        Canvas.SetLeft(x, -80);
+                        Canvas.SetTop(x, Canvas.GetTop(x) + (x.Height + 10));
+
+                    }
+                    Rect enemyHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    if (playerHitBox.IntersectsWith(enemyHitBox))
+                    {
+                        showGameOver("Game Over");
+                    }
+
                 }
 
-                Rect bullet = new Rect (Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                if (x is Rectangle && (string)x.Tag == "enemyBullet")
+                {
+                    Canvas.SetTop(x, Canvas.GetTop(x) + 10);
 
+                    if (Canvas.GetTop(x) > 480)
+                    {
+                        itemsToRemove.Add(x);
+                    }
+
+                    Rect enemyBulletHitBox = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                    if (playerHitBox.IntersectsWith(enemyBulletHitBox))
+                    {
+                        showGameOver("You were hit by an Invanders Bullet!!!");
+                    }
+
+
+
+                }
             }
+
+            foreach (Rectangle i in itemsToRemove)
+            {
+                myCanvas.Children.Remove(i);
+            }
+
+
         }
         //Key is Down
         private void KeyIsDown(object sender, KeyEventArgs e)
@@ -223,6 +273,7 @@ namespace Space_Invaders_Game
         }
         private void showGameOver(string msg )
         {
+
 
         }
     }

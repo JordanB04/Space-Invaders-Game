@@ -7,10 +7,15 @@
         mc:Ignorable="d"
         Title="Space Invanders Game" Height="500" Width="800">
     <Canvas Name="myCanvas" Focusable="True" Background="Black" KeyDown="KeyIsDown" KeyUp="KeyIsUp">
+        <Label Content="By: JB"
+               FontSize="72"
+               Foreground="White"
+               Opacity="0.1"
+               Canvas.Left="300"
+               Canvas.Top="150"
+               Panel.ZIndex="-1"/>
+
         <Label Name="enemiesLeft" Foreground="White" FontSize="16" FontWeight="ExtraBold">Enemies Remaining: 0</Label>
-
         <Rectangle Name="player" Fill="White" Height="65" Width="55" Canvas.Left="381" Canvas.Top="394" />
-
-
     </Canvas>
 </Window>
